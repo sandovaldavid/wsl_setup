@@ -56,31 +56,18 @@ git config --global user.email "sandovaldavid2202@gmail.com"
 git config --global credential.helper store
 git config --global init.defaultBranch main
 
-# Install bat and handle Ubuntu's batcat naming
-if ! command -v bat &> /dev/null; then
+# Install and configure bat/batcat
+if ! command -v batcat &> /dev/null; then
     echo "Installing bat..."
     sudo apt install -y bat
-    
-    # Create bat symlink if Ubuntu's batcat is present
-    if [ -f /usr/bin/batcat ]; then
-        mkdir -p ~/.local/bin
-        ln -sf /usr/bin/batcat ~/.local/bin/bat
-        
-        # Add .local/bin to PATH if not already present
-        if ! grep -q "PATH.*/.local/bin" ~/.zshrc; then
-            echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
-        fi
-    fi
 fi
 
-# Configure bat aliases and settings
-if ! grep -q "# BAT Configuration" ~/.zshrc; then
+# Configure bat alias
+if ! grep -q "# BAT aliases" ~/.zshrc; then
     cat >> ~/.zshrc << 'EOL'
 
-# BAT Configuration
-alias cat="$(which batcat || which bat) --style=numbers,changes,header"
-export BAT_THEME="Dracula"
-export BAT_STYLE="numbers,changes,header"
+# BAT aliases
+alias cat='batcat'
 EOL
 fi
 
