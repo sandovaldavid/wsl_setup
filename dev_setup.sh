@@ -52,7 +52,7 @@ fi
 
 # Configure Git
 git config --global user.name "sandovaldavid"
-git config --global user.email "sandovaldavid2202@gmail.com"
+git config --global user.email "sandovaldavid2201@gmail.com"
 git config --global credential.helper store
 git config --global init.defaultBranch main
 
