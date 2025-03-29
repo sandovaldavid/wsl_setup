@@ -77,6 +77,9 @@ fi
 # Install Bun
 curl -fsSL https://bun.sh/install | bash
 
+# Add bun to PATH
+export PATH="$HOME/.bun/bin:$PATH"
+
 # Python Setup
 # -----------
 
@@ -101,6 +104,9 @@ if ! grep -q "# Environment Configuration" ~/.zshrc; then
 # PATH configurations
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/miniconda3/bin:$PATH"
+
+# Conda env name:
+conda config --set env_prompt '({name})'
 
 # LSD aliases
 alias ls='lsd --group-dirs first --icon always'
