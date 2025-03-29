@@ -12,7 +12,7 @@ fi
 # Update system and install base packages
 echo "Installing development tools..."
 sudo apt update && sudo apt upgrade -y
-PACKAGES="fzf bat exa tldr unzip wget curl"
+PACKAGES="fzf bat eza tldr unzip wget curl"
 for package in $PACKAGES; do
     if ! command -v $package &> /dev/null; then
         sudo apt install -y $package
