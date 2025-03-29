@@ -12,10 +12,11 @@ fi
 # Update system and install base packages
 echo "Installing development tools..."
 sudo apt update && sudo apt upgrade -y
-PACKAGES="fzf bat eza tldr unzip wget curl"
+PACKAGES="fzf bat exa tldr unzip wget curl"
 for package in $PACKAGES; do
     if ! command -v $package &> /dev/null; then
-        sudo apt install -y $package
+        echo "Installing $package..."
+        sudo apt install -y $package || echo "Warning: Could not install $package from repositories"
     fi
 done
 
@@ -24,9 +25,23 @@ done
 
 # Install and configure lsd
 if ! command -v lsd &> /dev/null; then
+    echo "Installing lsd..."
     wget https://github.com/lsd-rs/lsd/releases/download/0.23.1/lsd-musl_0.23.1_amd64.deb -O /tmp/lsd.deb
     sudo dpkg -i /tmp/lsd.deb
     rm /tmp/lsd.deb
+fi
+
+# Install eza (modern replacement for exa)
+if ! command -v eza &> /dev/null; then
+    echo "Installing eza..."
+    EZA_VERSION="0.16.0"
+    wget https://github.com/eza-community/eza/releases/download/v${EZA_VERSION}/eza_x86_64-unknown-linux-gnu.tar.gz -O /tmp/eza.tar.gz
+    mkdir -p ~/.local/bin
+    tar -xf /tmp/eza.tar.gz -C /tmp/
+    mv /tmp/eza ~/.local/bin/
+    rm /tmp/eza.tar.gz
+    # Make sure ~/.local/bin is in PATH
+    export PATH="$HOME/.local/bin:$PATH"
 fi
 
 # Install and configure bat/batcat
